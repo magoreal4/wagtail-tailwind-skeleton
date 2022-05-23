@@ -1,0 +1,55 @@
+{% load static wagtailcore_tags wagtailuserbar wagtailimages_tags %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            {% block title %}
+                {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% wagtail_site as current_site %}
+                {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
+            {% endblock %}
+        </title>
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        {# Global stylesheets #}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+        {% block favicon %}
+            {% if settings.c_settings.Logo.favicon %}
+                {# See https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/app-icon/ #}
+                {% image settings.c_settings.Logo.favicon fill-120x120 format-png as favicon_iphone %}
+                {% image settings.c_settings.Logo.favicon fill-180x180 format-png as favicon_iphone_plus %}
+                {% image settings.c_settings.Logo.favicon fill-152x152 format-png as favicon_ipad %}
+                {% image settings.c_settings.Logo.favicon fill-167x167 format-png as favicon_ipad_pro %}
+                <link rel="icon" type="image/png" href="{{ favicon_iphone_plus.url }}" />
+                <link rel="apple-touch-icon" href="{{ favicon_iphone_plus.url }}">
+                <link rel="apple-touch-icon" sizes="120x120" href="{{ favicon_iphone.url }}">
+                <link rel="apple-touch-icon" sizes="180x180" href="{{ favicon_iphone_plus.url }}">
+                <link rel="apple-touch-icon" sizes="152x152" href="{{ favicon_ipad.url }}">
+                <link rel="apple-touch-icon" sizes="167x167" href="{{ favicon_ipad_pro.url }}">
+            {% endif %}
+        {% endblock %}
+
+        {% block extra_css %}
+            {# Override this in templates to add extra stylesheets #}
+        {% endblock %}
+    </head>
+
+    <body class="{% block body_class %}{% endblock %}">
+        {% include "./navbar.html" %}
+        {% wagtailuserbar %}
+
+        {% block content %}{% endblock %}
+
+        {# Global javascript #}
+        <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+
+        {% block extra_js %}
+            {# Override this in templates to add extra javascript #}
+        {% endblock %}
+    </body>
+</html>

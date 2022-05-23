@@ -1,0 +1,32 @@
+{% load menus_tags svg %}
+{% get_menu "main" as navigation %}
+<nav class="bg-transparent">
+    <div class="container flex justify-between mx-auto md:justify-center md:space-x-8">
+        <ul class="items-stretch hidden space-x-3 md:flex">
+            {% widthratio navigation.menu_items.all|length 2 1 as midpoint %}
+            {% for value in navigation.menu_items.all %}
+            <li class="flex">
+                <a rel="" href="{{ value.link }}" class="flex items-center px-4 -mb-1" {% if value.open_in_new_tab %}
+                    target="_blank" {% endif %}>{{ value.title }}</a>
+            </li>
+            {% if forloop.counter == midpoint|add:"0" %}
+        </ul>
+        <!-- Logotipo -->
+        <a rel="noopener noreferrer" href="#" aria-label="Back to homepage" class="flex items-center p-2">
+            
+            {% svg settings.c_settings.Logo.logo %}
+        </a>
+        <ul class="items-stretch hidden space-x-3 md:flex">
+            {% endif %}
+            {% endfor %}
+        </ul>
+
+        <button class="p-4 md:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                class="w-6 h-6 dark:text-coolGray-100">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                </path>
+            </svg>
+        </button>
+    </div>
+</nav>
