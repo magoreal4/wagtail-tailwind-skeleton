@@ -312,4 +312,4 @@ dist
 # End of https://www.toptal.com/developers/gitignore/api/node,django
 
 migrations/*
-!migrations/__init__.py 
+# !migrations/__init__.py
